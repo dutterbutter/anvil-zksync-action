@@ -1,7 +1,4 @@
-// webpack.config.cjs
-
 const path = require("path");
-const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
   mode: "production",
@@ -9,30 +6,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "index.cjs",
-    libraryTarget: "commonjs2",
   },
   target: "node",
-  resolve: {
-    extensions: [".js", ".cjs"],
-  },
-  externals: [
-    nodeExternals({
-      // Allowlist @actions/* modules to include them in the bundle
-      allowlist: [/^@actions/, /^ofetch/],
-    }),
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.cjs$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
-          },
-        },
-      },
-    ],
-  },
 };
