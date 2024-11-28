@@ -12,29 +12,19 @@ const DEFAULT_ARCH = "x86_64-unknown-linux-gnu";
 const DEFAULT_MODE = "run";
 const DEFAULT_PORT = "8011";
 const DEFAULT_HOST = "127.0.0.1";
-const HEALTH_CHECK_TIMEOUT = 5000; // in milliseconds
 const HEALTH_CHECK_RETRIES = 3;
 const HEALTH_CHECK_DELAY = 2000; // in milliseconds
 
-// Entry Point
 (async () => {
   try {
-    // Fetch Inputs
     const inputs = getInputs();
-
-    // Validate Inputs
     validateInputs(inputs);
 
-    // Download and Setup Tool
     const toolPath = await setupTool(inputs.releaseTag, inputs.target);
 
-    // Construct Command-Line Arguments
     const args = constructArgs(inputs);
-
-    // Start the Process
     spawnProcess(toolPath, args);
 
-    // Perform Health Check
     await performHealthCheck(inputs.host, inputs.port);
 
     info(`anvil-zksync started successfully on ${inputs.host}:${inputs.port}`);

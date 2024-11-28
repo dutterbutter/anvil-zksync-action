@@ -108,7 +108,7 @@ inputs:
   cache:
     description: "Cache type (none, memory, disk)"
     required: false
-    default: "none"
+    default: "disk"
   resetCache:
     description: "Reset the local disk cache (true, false)"
     required: false
