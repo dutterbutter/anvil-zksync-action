@@ -1,0 +1,36 @@
+{
+  "name": "anvil-zksync-action",
+  "version": "1.0.0",
+  "description": "GitHub Action to run anvil-zksync with various configurations.",
+  "main": "dist/index.cjs",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "prepare": "bun run build"
+  },
+  "keywords": [
+    "github",
+    "action",
+    "anvil-zksync",
+    "zksync",
+    "blockchain"
+  ],
+  "author": "Dustin Brickwood",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/exec": "^1.1.1",
+    "@actions/tool-cache": "^2.0.1",
+    "ofetch": "^1.3.3"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "eslint": "^8.47.0",
+    "@babel/core": "^7.22.0",
+    "@babel/preset-env": "^7.22.5",
+    "babel-loader": "^9.1.3",
+    "webpack-node-externals": "^3.0.0"
+  }
+}

@@ -1,0 +1,150 @@
+name: 'Era Test Node Action'
+description: 'GitHub Action that simplifies running `era_test_node` in your CI/CD workflows!'
+author: 'Dustin Brickwood'
+branding:
+  icon: 'check-circle'
+  color: 'green'
+inputs:
+  releaseTag:
+    description: "Release tag of anvil-zksync to use (default: latest)"
+    required: false
+    default: "latest"
+  target:
+    description: "Target architecture (default: x86_64-unknown-linux-gnu)"
+    required: false
+    default: "x86_64-unknown-linux-gnu"
+  mode:
+    description: "Mode to run the node (run or fork)"
+    required: false
+    default: "run"
+  forkUrl:
+    description: "Network to fork from (e.g., http://XXX:YY, mainnet, sepolia-testnet)"
+    required: false
+  forkBlockNumber:
+    description: "Fetch state from a specific block number over a remote endpoint"
+    required: false
+  forkTransactionHash:
+    description: "Fetch state from a specific transaction hash over a remote endpoint"
+    required: false
+  port:
+    description: "Port to listen on (default: 8011)"
+    required: false
+    default: "8011"
+  host:
+    description: "The host IP address to listen on (default: 127.0.0.1)"
+    required: false
+    default: "127.0.0.1"
+  chainId:
+    description: "Specify chain ID (default: 260)"
+    required: false
+    default: "260"
+  debugMode:
+    description: "Enable debug mode"
+    required: false
+    default: "false"
+  showCalls:
+    description: "Show call debug information (none, user, system, all)"
+    required: false
+  showOutputs:
+    description: "Show call output information (true, false)"
+    required: false
+  showStorageLogs:
+    description: "Show storage log information (none, read, write, paid, all)"
+    required: false
+  showVmDetails:
+    description: "Show VM details information (none, all)"
+    required: false
+  showGasDetails:
+    description: "Show gas details information (none, all)"
+    required: false
+  resolveHashes:
+    description: "Resolve ABI and topic names for better readability (true, false)"
+    required: false
+    default: "false"
+  log:
+    description: "Log level (trace, debug, info, warn, error)"
+    required: false
+    default: "info"
+  logFilePath:
+    description: "Log file path (default: era_test_node.log)"
+    required: false
+    default: "era_test_node.log"
+  offline:
+    description: "Run in offline mode (true, false)"
+    required: false
+    default: "false"
+  healthCheckEndpoint:
+    description: "Enable health check endpoint (true, false)"
+    required: false
+    default: "false"
+  configOut:
+    description: "Output config file path"
+    required: false
+  l1GasPrice:
+    description: "Custom L1 gas price (in wei)"
+    required: false
+  l2GasPrice:
+    description: "Custom L2 gas price (in wei)"
+    required: false
+  l1PubdataPrice:
+    description: "Custom L1 pubdata price (in wei)"
+    required: false
+  priceScaleFactor:
+    description: "Gas price estimation scale factor"
+    required: false
+  limitScaleFactor:
+    description: "Gas limit estimation scale factor"
+    required: false
+  overrideBytecodesDir:
+    description: "Directory to override bytecodes"
+    required: false
+  devSystemContracts:
+    description: "Option for system contracts (built-in, local, built-in-without-security)"
+    required: false
+  emulateEvm:
+    description: "Enable EVM emulation (true, false)"
+    required: false
+    default: "false"
+  cache:
+    description: "Cache type (none, memory, disk)"
+    required: false
+    default: "disk"
+  resetCache:
+    description: "Reset the local disk cache (true, false)"
+    required: false
+    default: "false"
+  cacheDir:
+    description: "Cache directory location for disk cache (default: .cache)"
+    required: false
+    default: ".cache"
+  accounts:
+    description: "Number of dev accounts to generate and configure (default: 10)"
+    required: false
+    default: "10"
+  balance:
+    description: "The balance of every dev account in Ether (default: 10000)"
+    required: false
+    default: "10000"
+  mnemonic:
+    description: "BIP39 mnemonic phrase for generating accounts"
+    required: false
+  mnemonicRandom:
+    description: "Automatically generate a BIP39 mnemonic phrase (number of words, default: 12)"
+    required: false
+  mnemonicSeedUnsafe:
+    description: "Generate a BIP39 mnemonic from a given seed (unsafe for production)"
+    required: false
+  derivationPath:
+    description: "Derivation path of the child key to be derived (default: m/44'/60'/0'/0/)"
+    required: false
+    default: "m/44'/60'/0'/0/"
+  autoImpersonate:
+    description: "Enable automatic impersonation on startup (true, false)"
+    required: false
+    default: "false"
+  blockTime:
+    description: "Block time in seconds for interval sealing"
+    required: false
+runs:
+  using: 'node20'
+  main: 'dist/index.cjs'
