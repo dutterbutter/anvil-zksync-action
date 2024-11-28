@@ -66,9 +66,9 @@ inputs:
     required: false
     default: "info"
   logFilePath:
-    description: "Log file path (default: era_test_node.log)"
+    description: "Log file path (default: anvil_zksync.log)"
     required: false
-    default: "era_test_node.log"
+    default: "anvil_zksync.log"
   offline:
     description: "Run in offline mode (true, false)"
     required: false
@@ -81,13 +81,13 @@ inputs:
     description: "Output config file path"
     required: false
   l1GasPrice:
-    description: "Custom L1 gas price (in wei)"
+    description: "Custom L1 gas price"
     required: false
   l2GasPrice:
-    description: "Custom L2 gas price (in wei)"
+    description: "Custom L2 gas price"
     required: false
   l1PubdataPrice:
-    description: "Custom L1 pubdata price (in wei)"
+    description: "Custom L1 pubdata price"
     required: false
   priceScaleFactor:
     description: "Gas price estimation scale factor"
@@ -108,7 +108,7 @@ inputs:
   cache:
     description: "Cache type (none, memory, disk)"
     required: false
-    default: "disk"
+    default: "none"
   resetCache:
     description: "Reset the local disk cache (true, false)"
     required: false
