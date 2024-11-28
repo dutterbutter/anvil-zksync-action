@@ -510,8 +510,6 @@ jobs:
         uses: dutterbutter/anvil-zksync-action@v1
 ```
 
-## Example Usage 📝
-
 ### Forking from Mainnet
 
 Run `anvil-zksync` in fork mode, forking from mainnet at a specific block height.
@@ -662,6 +660,6 @@ Feel free to open issues or PRs if you find any problems or have suggestions for
 
 ## License 📄
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 **Happy Testing! 🚀**
