@@ -19,6 +19,171 @@ This GitHub Action runs the [`anvil-zksync`](https://github.com/matter-labs/anvi
 - **Caching Mechanism:** Supports in-memory or disk caching with options to reset or specify cache directories.
 - **Account Management:** Configure the number of dev accounts, their balances, and derivation paths.
 
+## Example Usage 📝
+
+### Quickstart
+
+Run `anvil-zksync` with default settings.
+
+```yml
+name: Run anvil-zksync
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run anvil-zksync
+        uses: dutterbutter/anvil-zksync-action@v1
+```
+
+### Forking from Mainnet
+
+Run `anvil-zksync` in fork mode, forking from mainnet at a specific block height.
+
+```yml
+name: Run anvil-zksync
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run anvil-zksync with fork
+        uses: dutterbutter/anvil-zksync-action@v1
+        with:
+          mode: 'fork'
+          forkUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'
+          forkBlockNumber: '12345678'
+          port: '8545'
+          chainId: '1'
+          debugMode: 'true'
+          showCalls: 'all'
+          showStorageLogs: 'write'
+          showVmDetails: 'all'
+          showGasDetails: 'all'
+          resolveHashes: 'true'
+          log: 'debug'
+          logFilePath: 'logs/anvil_zksync.log'
+          target: 'x86_64-unknown-linux-gnu'
+          releaseTag: 'latest'
+```
+
+### Upload Log File to Artifacts
+
+Run `anvil-zksync` and upload the log file as a GitHub Action artifact.
+
+```yml
+name: Run anvil-zksync
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Run anvil-zksync
+        uses: dutterbutter/anvil-zksync-action@v1
+        with:
+          mode: 'fork'
+          forkUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'
+          showCalls: 'user'
+          showStorageLogs: 'read'
+          showVmDetails: 'all'
+          showGasDetails: 'all'
+          resolveHashes: 'true'
+          log: 'info'
+          logFilePath: 'anvil_zksync.log'
+          target: 'x86_64-unknown-linux-gnu'
+          releaseTag: 'latest'
+
+      - name: Install Dependencies
+        run: yarn install
+      
+      - name: Run Tests
+        run: |
+          yarn test:contracts
+
+      - name: Upload Anvil ZKSYNC Log
+        uses: actions/upload-artifact@v3
+        with:
+          name: anvil_zksync-log
+          path: anvil_zksync.log
+```
+
+### Using Custom Accounts
+
+Run `anvil-zksync` with custom account configurations.
+
+```yml
+name: Run Anvil ZKSYNC Action
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Anvil ZKSYNC with EVM Emulation
+        uses: dutterbutter/anvil-zksync-action@latest
+        with:
+          mode: 'run'
+          accounts: '20'
+          balance: '5000'
+          mnemonic: 'test test test test test test test test test test test junk'
+          derivationPath: "m/44'/60'/0'/0/"
+          autoImpersonate: 'true'
+          blockTime: '15'
+          log: 'debug'
+          logFilePath: 'anvil_zksync.log'
+          target: 'x86_64-unknown-linux-gnu'
+          releaseTag: 'latest'
+```
+
+---
+
+## Additional Information
+
+### Handling Sensitive Inputs Securely
+
+Ensure that sensitive inputs like `mnemonic` are stored securely using GitHub Secrets and not exposed in logs. For example, use the `secrets` context to pass sensitive data:
+
+```yml
+- name: Run anvil-zksync
+  uses: dutterbutter/anvil-zksync-action@v1
+  with:
+    mnemonic: ${{ secrets.MNEMONIC }}
+    # ... other inputs
+```
+
 ## Inputs 🛠
 
 ### `releaseTag`
@@ -484,171 +649,6 @@ Block time in seconds for interval sealing.
 - **Example:** `15`
 
 ---
-
-## Example Usage 📝
-
-### Quickstart
-
-Run `anvil-zksync` with default settings.
-
-```yml
-name: Run anvil-zksync
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Run anvil-zksync
-        uses: dutterbutter/anvil-zksync-action@v1
-```
-
-### Forking from Mainnet
-
-Run `anvil-zksync` in fork mode, forking from mainnet at a specific block height.
-
-```yml
-name: Run anvil-zksync
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Run anvil-zksync with fork
-        uses: dutterbutter/anvil-zksync-action@v1
-        with:
-          mode: 'fork'
-          forkUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'
-          forkBlockNumber: '12345678'
-          port: '8545'
-          chainId: '1'
-          debugMode: 'true'
-          showCalls: 'all'
-          showStorageLogs: 'write'
-          showVmDetails: 'all'
-          showGasDetails: 'all'
-          resolveHashes: 'true'
-          log: 'debug'
-          logFilePath: 'logs/anvil_zksync.log'
-          target: 'x86_64-unknown-linux-gnu'
-          releaseTag: 'latest'
-```
-
-### Upload Log File to Artifacts
-
-Run `anvil-zksync` and upload the log file as a GitHub Action artifact.
-
-```yml
-name: Run anvil-zksync
-
-on:
-  pull_request:
-    branches: [main]
-  workflow_dispatch:
-
-jobs:
-  test:
-    name: Unit Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-      
-      - name: Run anvil-zksync
-        uses: dutterbutter/anvil-zksync-action@v1
-        with:
-          mode: 'fork'
-          forkUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'
-          showCalls: 'user'
-          showStorageLogs: 'read'
-          showVmDetails: 'all'
-          showGasDetails: 'all'
-          resolveHashes: 'true'
-          log: 'info'
-          logFilePath: 'anvil_zksync.log'
-          target: 'x86_64-unknown-linux-gnu'
-          releaseTag: 'latest'
-
-      - name: Install Dependencies
-        run: yarn install
-      
-      - name: Run Tests
-        run: |
-          yarn test:contracts
-
-      - name: Upload Anvil ZKSYNC Log
-        uses: actions/upload-artifact@v3
-        with:
-          name: anvil_zksync-log
-          path: anvil_zksync.log
-```
-
-### Using Custom Accounts
-
-Run `anvil-zksync` with custom account configurations.
-
-```yml
-name: Run Anvil ZKSYNC Action
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Run Anvil ZKSYNC with EVM Emulation
-        uses: dutterbutter/anvil-zksync-action@latest
-        with:
-          mode: 'run'
-          accounts: '20'
-          balance: '5000'
-          mnemonic: 'test test test test test test test test test test test junk'
-          derivationPath: "m/44'/60'/0'/0/"
-          autoImpersonate: 'true'
-          blockTime: '15'
-          log: 'debug'
-          logFilePath: 'anvil_zksync.log'
-          target: 'x86_64-unknown-linux-gnu'
-          releaseTag: 'latest'
-```
-
----
-
-## Additional Information
-
-### Handling Sensitive Inputs Securely
-
-Ensure that sensitive inputs like `mnemonic` are stored securely using GitHub Secrets and not exposed in logs. For example, use the `secrets` context to pass sensitive data:
-
-```yml
-- name: Run anvil-zksync
-  uses: dutterbutter/anvil-zksync-action@v1
-  with:
-    mnemonic: ${{ secrets.MNEMONIC }}
-    # ... other inputs
-```
 
 ### Support
 
