@@ -15,7 +15,12 @@ module.exports = {
   resolve: {
     extensions: [".js", ".cjs"],
   },
-  externals: [nodeExternals()],
+  externals: [
+    nodeExternals({
+      // Allowlist @actions/* modules to include them in the bundle
+      allowlist: [/^@actions/, /^ofetch/],
+    }),
+  ],
   module: {
     rules: [
       {
