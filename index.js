@@ -13,7 +13,7 @@ const DEFAULT_MODE = "run";
 const DEFAULT_PORT = "8011";
 const DEFAULT_HOST = "127.0.0.1";
 const HEALTH_CHECK_RETRIES = 3;
-const HEALTH_CHECK_DELAY = 2000; // in milliseconds
+const HEALTH_CHECK_DELAY = 3000; // in milliseconds
 
 (async () => {
   try {
@@ -308,7 +308,7 @@ async function isNodeRunning(host, port) {
         params: [],
       },
       {
-        timeout: 5000, // 5 seconds
+        timeout: 8000, // 8 seconds
       }
     );
     return response.data && response.data.result !== undefined;
