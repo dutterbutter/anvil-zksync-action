@@ -4,7 +4,7 @@ const { getInput, setFailed, addPath, info, debug } = require("@actions/core");
 const { exec } = require("@actions/exec");
 const tc = require("@actions/tool-cache");
 const { spawn } = require("child_process");
-const { fetch } = require("ofetch");
+const { axios } = require("axios");
 
 // Constants
 const DEFAULT_RELEASE_TAG = "latest";
@@ -298,8 +298,8 @@ function delay(ms) {
  */
 async function isNodeRunning(host, port) {
   try {
-    const url = `http://localhost:${port}`;
-    const response = await fetch.post(
+    const url = `http://${host}:${port}`;
+    const response = await axios.post(
       url,
       {
         jsonrpc: "2.0",
