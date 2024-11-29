@@ -1,10 +1,10 @@
 // index.cjs
 
-const { getInput, setFailed, addPath, info, debug } = require("@actions/core");
-const { exec } = require("@actions/exec");
-const tc = require("@actions/tool-cache");
-const { spawn } = require("child_process");
-const axios = require("axios");
+import { getInput, setFailed, addPath, info, debug } from "@actions/core";
+import { exec } from "@actions/exec";
+import * as tc from "@actions/tool-cache";
+import { spawn } from "child_process";
+import axios from "axios";
 
 // Constants
 const DEFAULT_RELEASE_TAG = "latest";
@@ -308,7 +308,7 @@ async function isNodeRunning(host, port) {
         params: [],
       },
       {
-        timeout: 3000, // 3 seconds
+        timeout: 5000, // 5 seconds
       }
     );
     return response.data && response.data.result !== undefined;
