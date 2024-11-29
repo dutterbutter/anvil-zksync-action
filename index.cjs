@@ -4,7 +4,7 @@ const { getInput, setFailed, addPath, info, debug } = require("@actions/core");
 const { exec } = require("@actions/exec");
 const tc = require("@actions/tool-cache");
 const { spawn } = require("child_process");
-const { axios } = require("axios");
+const axios = require("axios");
 
 // Constants
 const DEFAULT_RELEASE_TAG = "latest";
