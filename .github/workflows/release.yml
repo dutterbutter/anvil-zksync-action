@@ -27,6 +27,10 @@ jobs:
       - name: Build Action
         run: bun run build
 
+        # TODO try removing this step
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+
       - name: Run Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
