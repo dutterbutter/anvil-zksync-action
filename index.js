@@ -1,10 +1,10 @@
 // index.cjs
 
-const { getInput, setFailed, addPath, info, debug } = require("@actions/core");
-const { exec } = require("@actions/exec");
-const tc = require("@actions/tool-cache");
-const { spawn } = require("child_process");
-const { fetch } = require("ofetch");
+import { getInput, setFailed, addPath, info, debug } from "@actions/core";
+import { exec } from "@actions/exec";
+import * as tc from "@actions/tool-cache";
+import { spawn } from "child_process";
+import axios from "axios";
 
 // Constants
 const DEFAULT_RELEASE_TAG = "latest";
@@ -13,7 +13,7 @@ const DEFAULT_MODE = "run";
 const DEFAULT_PORT = "8011";
 const DEFAULT_HOST = "127.0.0.1";
 const HEALTH_CHECK_RETRIES = 3;
-const HEALTH_CHECK_DELAY = 2000; // in milliseconds
+const HEALTH_CHECK_DELAY = 8000; // in milliseconds
 
 (async () => {
   try {
@@ -264,6 +264,8 @@ function spawnProcess(toolPath, args) {
  * @param {string} port - The port number.
  */
 async function performHealthCheck(host, port) {
+  // Wait before the first health check
+  await delay(HEALTH_CHECK_DELAY);
   for (let attempt = 1; attempt <= HEALTH_CHECK_RETRIES; attempt++) {
     if (await isNodeRunning(host, port)) {
       info(`Health check passed on attempt ${attempt}`);
@@ -299,7 +301,7 @@ function delay(ms) {
 async function isNodeRunning(host, port) {
   try {
     const url = `http://${host}:${port}`;
-    const response = await fetch.post(
+    const response = await axios.post(
       url,
       {
         jsonrpc: "2.0",
@@ -313,6 +315,7 @@ async function isNodeRunning(host, port) {
     );
     return response.data && response.data.result !== undefined;
   } catch (error) {
+    console.log(error);
     debug(`Health check failed for ${host}:${port} - ${error.message}`);
     return false;
   }
@@ -327,8 +330,8 @@ async function isNodeRunning(host, port) {
 async function getDownloadUrl(releaseTag, arch) {
   const apiUrl =
     releaseTag === "latest"
-      ? "https://api.github.com/repos/matter-labs/era-test-node/releases/latest"
-      : `https://api.github.com/repos/matter-labs/era-test-node/releases/tags/${releaseTag}`;
+      ? "https://api.github.com/repos/dutterbutter/anvil-zksync/releases/latest"
+      : `https://api.github.com/repos/dutterbutter/anvil-zksync/releases/tags/${releaseTag}`;
 
   info(`Fetching release information from ${apiUrl}`);
 
