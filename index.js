@@ -13,7 +13,7 @@ const DEFAULT_MODE = "run";
 const DEFAULT_PORT = "8011";
 const DEFAULT_HOST = "127.0.0.1";
 const HEALTH_CHECK_RETRIES = 3;
-const HEALTH_CHECK_DELAY = 3000; // in milliseconds
+const HEALTH_CHECK_DELAY = 8000; // in milliseconds
 
 (async () => {
   try {
@@ -264,6 +264,8 @@ function spawnProcess(toolPath, args) {
  * @param {string} port - The port number.
  */
 async function performHealthCheck(host, port) {
+  // Wait before the first health check
+  await delay(HEALTH_CHECK_DELAY);
   for (let attempt = 1; attempt <= HEALTH_CHECK_RETRIES; attempt++) {
     if (await isNodeRunning(host, port)) {
       info(`Health check passed on attempt ${attempt}`);
@@ -308,7 +310,7 @@ async function isNodeRunning(host, port) {
         params: [],
       },
       {
-        timeout: 8000, // 8 seconds
+        timeout: 3000, // 3 seconds
       }
     );
     return response.data && response.data.result !== undefined;
