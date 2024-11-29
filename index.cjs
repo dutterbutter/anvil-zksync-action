@@ -298,7 +298,7 @@ function delay(ms) {
  */
 async function isNodeRunning(host, port) {
   try {
-    const url = `http://${host}:${port}`;
+    const url = `http://localhost:${port}`;
     const response = await fetch.post(
       url,
       {
@@ -313,6 +313,7 @@ async function isNodeRunning(host, port) {
     );
     return response.data && response.data.result !== undefined;
   } catch (error) {
+    console.log(error);
     debug(`Health check failed for ${host}:${port} - ${error.message}`);
     return false;
   }
