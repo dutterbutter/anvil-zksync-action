@@ -1,6 +1,6 @@
 # anvil-zksync Action 🚀
 
-This repository has been renamed from era-test-node-action to anvil-zksync-action. All references to the previous name have been updated to reflect this change.
+This repository has been renamed from `era-test-node-action` to `anvil-zksync-action`. All references to the previous name have been updated to reflect this change.
 
 ## Description
 
@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run anvil-zksync
-        uses: dutterbutter/anvil-zksync-action@v1
+        uses: dutterbutter/anvil-zksync-action@latest
 ```
 
 ### Forking from Mainnet
@@ -64,7 +64,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run anvil-zksync with fork
-        uses: dutterbutter/anvil-zksync-action@v1
+        uses: dutterbutter/anvil-zksync-action@v1.0.0
         with:
           mode: 'fork'
           forkUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'
@@ -105,7 +105,7 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Run anvil-zksync
-        uses: dutterbutter/anvil-zksync-action@v1
+        uses: dutterbutter/anvil-zksync-action@latest
         with:
           mode: 'fork'
           forkUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'
@@ -178,7 +178,7 @@ Ensure that sensitive inputs like `mnemonic` are stored securely using GitHub Se
 
 ```yml
 - name: Run anvil-zksync
-  uses: dutterbutter/anvil-zksync-action@v1
+  uses: dutterbutter/anvil-zksync-action@v1.0.0
   with:
     mnemonic: ${{ secrets.MNEMONIC }}
     # ... other inputs

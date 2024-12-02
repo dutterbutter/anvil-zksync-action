@@ -330,8 +330,8 @@ async function isNodeRunning(host, port) {
 async function getDownloadUrl(releaseTag, arch) {
   const apiUrl =
     releaseTag === "latest"
-      ? "https://api.github.com/repos/dutterbutter/anvil-zksync/releases/latest"
-      : `https://api.github.com/repos/dutterbutter/anvil-zksync/releases/tags/${releaseTag}`;
+      ? "https://api.github.com/repos/matter-labs/anvil-zksync/releases/latest"
+      : `https://api.github.com/repos/matter-labs/anvil-zksync/releases/tags/${releaseTag}`;
 
   info(`Fetching release information from ${apiUrl}`);
 
