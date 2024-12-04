@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run anvil-zksync
-        uses: dutterbutter/anvil-zksync-action@latest
+        uses: dutterbutter/anvil-zksync-action@v1.1.0
 ```
 
 ### Forking from Mainnet
@@ -64,7 +64,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run anvil-zksync with fork
-        uses: dutterbutter/anvil-zksync-action@v1.0.0
+        uses: dutterbutter/anvil-zksync-action@v1.1.0
         with:
           mode: 'fork'
           forkUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'
@@ -105,7 +105,7 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Run anvil-zksync
-        uses: dutterbutter/anvil-zksync-action@latest
+        uses: dutterbutter/anvil-zksync-action@v1.1.0
         with:
           mode: 'fork'
           forkUrl: 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'
@@ -152,8 +152,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Anvil ZKSYNC with EVM Emulation
-        uses: dutterbutter/anvil-zksync-action@latest
+      - name: Run Anvil ZKSync with EVM Emulation
+        uses: dutterbutter/anvil-zksync-action@v1.1.0
         with:
           mode: 'run'
           accounts: '20'
@@ -178,7 +178,7 @@ Ensure that sensitive inputs like `mnemonic` are stored securely using GitHub Se
 
 ```yml
 - name: Run anvil-zksync
-  uses: dutterbutter/anvil-zksync-action@v1.0.0
+  uses: dutterbutter/anvil-zksync-action@v1.1.0
   with:
     mnemonic: ${{ secrets.MNEMONIC }}
     # ... other inputs
