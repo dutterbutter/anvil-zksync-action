@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/dutterbutter/anvil-zksync-action/compare/v1.0.0...v1.1.0) (2024-12-02)
+
+
+### Features
+
+* update to reflect repo name change ([eee71f4](https://github.com/dutterbutter/anvil-zksync-action/commit/eee71f478f78e933c3123d1a85c4fdd20922e7f1))
+
 # 1.0.0 (2024-11-29)
 
 
