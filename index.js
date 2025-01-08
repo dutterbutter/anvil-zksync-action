@@ -149,6 +149,25 @@ async function setupTool(releaseTag, target) {
     throw new Error(`Binary at ${binaryPath} is not executable ${err}`);
   }
 
+  // **Version Check**
+  info("Checking anvil-zksync version...");
+  try {
+    await exec(binaryPath, ["--version"], {
+      listeners: {
+        stdout: (data) => {
+          info(`Version Output: ${data.toString()}`);
+        },
+        stderr: (data) => {
+          info(`Error Output: ${data.toString()}`);
+        },
+      },
+    });
+  } catch (err) {
+    throw new Error(
+      `Failed to run anvil-zksync version check: ${err.message}`
+    );
+  }
+
   return toolPath;
 }
 
@@ -246,11 +265,21 @@ function constructArgs(inputs) {
  * @returns {ChildProcess} - The spawned child process.
  */
 function spawnProcess(toolPath, args) {
-  info(`Starting anvil-zksync with args: ${args.join(" ")}`);
+  const binaryPath = `${toolPath}/anvil-zksync`;
+  info(`Starting anvil-zksync from path: ${binaryPath}`);
+  info(`With arguments: ${args.join(" ")}`);
 
-  const child = spawn(`${toolPath}/anvil-zksync`, args, {
+  const child = spawn(binaryPath, args, {
     detached: true,
-    stdio: "ignore",
+    stdio: ["ignore", "pipe", "pipe"], // Capture output
+  });
+
+  child.stdout.on("data", (data) => {
+    info(`anvil-zksync stdout: ${data}`);
+  });
+
+  child.stderr.on("data", (data) => {
+    info(`anvil-zksync stderr: ${data}`);
   });
 
   child.on("error", (error) => {
