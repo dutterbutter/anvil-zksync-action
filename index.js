@@ -130,9 +130,24 @@ async function setupTool(releaseTag, target) {
 
   addPath(toolPath);
 
+  // Verify if the binary exists
+  const binaryPath = `${toolPath}/anvil-zksync`;
+  const fs = require("fs");
+  if (!fs.existsSync(binaryPath)) {
+    throw new Error(`anvil-zksync binary not found at ${binaryPath}`);
+  }
+
   // Make the anvil-zksync binary executable
   await exec("chmod", ["+x", `${toolPath}/anvil-zksync`]);
   info(`Set execute permissions for ${toolPath}/anvil-zksync`);
+
+  // Verify execute permissions
+  try {
+    await exec(`test -x ${binaryPath}`);
+    info(`Verified ${binaryPath} is executable`);
+  } catch (err) {
+    throw new Error(`Binary at ${binaryPath} is not executable ${err}`);
+  }
 
   return toolPath;
 }
