@@ -149,6 +149,23 @@ async function setupTool(releaseTag, target) {
     throw new Error(`Binary at ${binaryPath} is not executable ${err}`);
   }
 
+    // Debugging: Check linked libraries using ldd
+  info("Checking linked libraries with ldd...");
+  try {
+    await exec("ldd", [binaryPath], {
+      listeners: {
+        stdout: (data) => {
+          info(`ldd Output: ${data.toString()}`);
+        },
+        stderr: (data) => {
+          info(`ldd Error Output: ${data.toString()}`);
+        },
+      },
+    });
+  } catch (err) {
+    info(`Error running ldd: ${err.message}`);
+  }
+
   // **Version Check**
   info("Checking anvil-zksync version...");
   try {
