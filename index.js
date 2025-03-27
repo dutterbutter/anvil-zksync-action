@@ -79,6 +79,7 @@ function getInputs() {
     derivationPath: getInput("derivationPath") || "m/44'/60'/0'/0/",
     autoImpersonate: getInput("autoImpersonate") === "true",
     blockTime: getInput("blockTime"),
+    protocolVersion: getInput("protocolVersion"),
   };
 }
 
@@ -149,6 +150,7 @@ function constructArgs(inputs) {
   if (inputs.offline) args.push("--offline");
   if (inputs.healthCheckEndpoint) args.push("--health-check-endpoint");
   if (inputs.configOut) args.push("--config-out", inputs.configOut);
+  if (inputs.protocolVersion) args.push("--protocol-version", inputs.protocolVersion);
 
   // Network Options
   if (inputs.port) args.push("--port", inputs.port);
