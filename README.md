@@ -127,7 +127,7 @@ jobs:
           yarn test:contracts
 
       - name: Upload Anvil ZKSYNC Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: anvil_zksync-log
           path: anvil_zksync.log

@@ -79,6 +79,7 @@ function getInputs() {
     derivationPath: getInput("derivationPath") || "m/44'/60'/0'/0/",
     autoImpersonate: getInput("autoImpersonate") === "true",
     blockTime: getInput("blockTime"),
+    protocolVersion: getInput("protocolVersion"),
   };
 }
 
