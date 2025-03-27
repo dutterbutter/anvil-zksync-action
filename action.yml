@@ -146,7 +146,7 @@ inputs:
     description: "Block time in seconds for interval sealing"
     required: false
   protocolVersion:
-    description: "Protocol to use"
+    description: "Protocol to use (e.g. 27)"
     required: false
 runs:
   using: 'node20'

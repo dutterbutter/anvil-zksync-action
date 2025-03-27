@@ -150,6 +150,7 @@ function constructArgs(inputs) {
   if (inputs.offline) args.push("--offline");
   if (inputs.healthCheckEndpoint) args.push("--health-check-endpoint");
   if (inputs.configOut) args.push("--config-out", inputs.configOut);
+  if (inputs.protocolVersion) args.push("--protocol-version", inputs.protocolVersion);
 
   // Network Options
   if (inputs.port) args.push("--port", inputs.port);
