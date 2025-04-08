@@ -80,6 +80,7 @@ function getInputs() {
     autoImpersonate: getInput("autoImpersonate") === "true",
     blockTime: getInput("blockTime"),
     protocolVersion: getInput("protocolVersion"),
+    systemContractsPath: getInput("systemContractsPath"),
   };
 }
 
@@ -106,6 +107,16 @@ function validateInputs(inputs) {
   }
   if (inputs.mode === "fork" && !inputs.forkUrl) {
     throw new Error("forkUrl is required when mode is set to 'fork'.");
+  }
+
+  // Enforce that systemContractsPath is only used when devSystemContracts is "local".
+  // Note: Allow devSystemContracts to be missing/empty if systemContractsPath is not provided.
+  if (inputs.systemContractsPath && inputs.systemContractsPath.trim() !== "") {
+    if (inputs.devSystemContracts !== "local") {
+      throw new Error(
+        "The --systemContractsPath option can only be used when --devSystemContracts is set to 'local'."
+      );
+    }
   }
 }
 
@@ -187,6 +198,8 @@ function constructArgs(inputs) {
     args.push("--override-bytecodes-dir", inputs.overrideBytecodesDir);
   if (inputs.devSystemContracts)
     args.push("--dev-system-contracts", inputs.devSystemContracts);
+  if (inputs.systemContractsPath)
+    args.push("--system-contracts-path", inputs.systemContractsPath);
   if (inputs.emulateEvm) args.push("--emulate-evm");
 
   // Logging Configuration

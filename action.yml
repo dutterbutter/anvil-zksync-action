@@ -148,6 +148,12 @@ inputs:
   protocolVersion:
     description: "Protocol to use (e.g. 27)"
     required: false
+  verbosity:
+    description: "Enable verbose logs (e.g. -vv)"
+    required: false
+  systemContractsPath:
+    description: "Path to the system contracts"
+    required: false
 runs:
   using: 'node20'
   main: 'dist/index.js'

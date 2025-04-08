@@ -508,7 +508,7 @@ Option for system contracts.
 
 - **Required:** No
 - **Default:** Not set
-- **Options:** 
+- **Options:**
   - `built-in`
   - `local`
   - `built-in-without-security`
@@ -647,6 +647,43 @@ Block time in seconds for interval sealing.
 - **Required:** No
 - **Default:** Not set
 - **Example:** `15`
+
+---
+
+Below is an example update for your README file. These sections describe the three new inputs with the formatting you provided:
+
+---
+
+### `verbosity`
+
+**Description:**  
+Sets the logging verbosity level for console output. This controls how much detail is printed during execution (for example, levels like `-vv`, `-vvv`).
+
+- **Required:** No  
+- **Default:** None  
+- **Example:** `vv`
+
+---
+
+### `systemContractsPath`
+
+**Description:**  
+Overrides the default location of the compiled system contracts. This option is only used when the `devSystemContracts` input is set to `local`. If not provided, the system will either use the default contracts folder or fall back to the `ZKSYNC_HOME` environment variable.
+
+- **Required:** No  
+- **Default:** Not set  
+- **Example:** `./system-contracts`
+
+---
+
+### `protocolVersion`
+
+**Description:**  
+Specifies the protocol version to use for loading system contracts. This determines which set of system contracts (and artifacts) are deployed. The latest version is used when no value is provided.
+
+- **Required:** No  
+- **Default:** Latest  
+- **Example:** `28`
 
 ---
 
