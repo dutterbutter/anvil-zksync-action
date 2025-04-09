@@ -81,6 +81,9 @@ function getInputs() {
     blockTime: getInput("blockTime"),
     protocolVersion: getInput("protocolVersion"),
     systemContractsPath: getInput("systemContractsPath"),
+    spawnL1: getInput("spawnL1"),
+    externalL1: getInput("externalL1"),
+    autoExecuteL1: getInput("autoExecuteL1")
   };
 }
 
@@ -222,6 +225,22 @@ function constructArgs(inputs) {
   if (inputs.derivationPath)
     args.push("--derivation-path", inputs.derivationPath);
   if (inputs.autoImpersonate) args.push("--auto-impersonate");
+
+  if (inputs.spawnL1 && inputs.spawnL1 !== "false") {
+    args.push("--spawn-l1");
+    // If a specific port is provided (and it’s not just "true"), then pass it along:
+    if (inputs.spawnL1 !== "true") {
+      args.push(inputs.spawnL1);
+    }
+  }
+  // If an external L1 endpoint is provided:
+  if (inputs.externalL1 && inputs.externalL1.trim() !== "") {
+    args.push("--external-l1", inputs.externalL1);
+  }
+  // If auto execution of L1 batches is enabled:
+  if (inputs.autoExecuteL1 === "true") {
+    args.push("--auto-execute-l1", "true");
+  }
 
   // Mode Handling
   if (inputs.mode === "fork") {

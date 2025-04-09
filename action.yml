@@ -29,15 +29,12 @@ inputs:
   port:
     description: "Port to listen on (default: 8011)"
     required: false
-    default: "8011"
   host:
     description: "The host IP address to listen on (default: 127.0.0.1)"
     required: false
-    default: "127.0.0.1"
   chainId:
     description: "Specify chain ID (default: 260)"
     required: false
-    default: "260"
   debugMode:
     description: "Enable debug mode"
     required: false
@@ -104,27 +101,21 @@ inputs:
   emulateEvm:
     description: "Enable EVM emulation (true, false)"
     required: false
-    default: "false"
   cache:
     description: "Cache type (none, memory, disk)"
     required: false
-    default: "disk"
   resetCache:
     description: "Reset the local disk cache (true, false)"
     required: false
-    default: "false"
   cacheDir:
     description: "Cache directory location for disk cache (default: .cache)"
     required: false
-    default: ".cache"
   accounts:
     description: "Number of dev accounts to generate and configure (default: 10)"
     required: false
-    default: "10"
   balance:
     description: "The balance of every dev account in Ether (default: 10000)"
     required: false
-    default: "10000"
   mnemonic:
     description: "BIP39 mnemonic phrase for generating accounts"
     required: false
@@ -137,7 +128,6 @@ inputs:
   derivationPath:
     description: "Derivation path of the child key to be derived (default: m/44'/60'/0'/0/)"
     required: false
-    default: "m/44'/60'/0'/0/"
   autoImpersonate:
     description: "Enable automatic impersonation on startup (true, false)"
     required: false
@@ -153,6 +143,15 @@ inputs:
     required: false
   systemContractsPath:
     description: "Path to the system contracts"
+    required: false
+  spawnL1:
+    description: "Enable L1 support and spawn L1 anvil node on the provided port (defaults to 8012). You may pass a specific port number (or 'true' to use the default)."
+    required: false
+  externalL1:
+    description: "Enable L1 support and use provided address as L1 JSON-RPC endpoint"
+    required: false
+  autoExecuteL1:
+    description: "Enable automatic execution of L1 batches (possible values: true, false)"
     required: false
 runs:
   using: 'node20'
