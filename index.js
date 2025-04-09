@@ -242,8 +242,6 @@ function constructArgs(inputs) {
     args.push("--derivation-path", inputs.derivationPath);
   if (inputs.autoImpersonate) args.push("--auto-impersonate");
 
-
-
   // Mode Handling
   if (inputs.mode === "fork") {
     args.push("fork");
@@ -271,11 +269,19 @@ function spawnProcess(toolPath, args) {
 
   const child = spawn(`${toolPath}/anvil-zksync`, args, {
     detached: true,
-    stdio: "ignore",
+    stdio: "pipe",
+  });
+
+  child.stdout.on("data", (data) => {
+    info(`[anvil-zksync stdout]: ${data.toString()}`);
+  });
+  child.stderr.on("data", (data) => {
+    info(`[anvil-zksync stderr]: ${data.toString()}`);
   });
 
   child.on("error", (error) => {
-    console.error(`Failed to start child process: ${error}`);
+    console.error(`Failed to start child process with command: ${toolPath}/anvil-zksync ${args.join(" ")}`);
+    console.error(`Error details: ${error.stack}`);
     setFailed(`Failed to start anvil-zksync: ${error.message}`);
   });
 
