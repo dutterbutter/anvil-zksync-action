@@ -269,15 +269,15 @@ function spawnProcess(toolPath, args) {
 
   const child = spawn(`${toolPath}/anvil-zksync`, args, {
     detached: true,
-    stdio: "pipe",
+    stdio: "ignore",
   });
 
-  child.stdout.on("data", (data) => {
-    info(`[anvil-zksync stdout]: ${data.toString()}`);
-  });
-  child.stderr.on("data", (data) => {
-    info(`[anvil-zksync stderr]: ${data.toString()}`);
-  });
+  // child.stdout.on("data", (data) => {
+  //   info(`[anvil-zksync stdout]: ${data.toString()}`);
+  // });
+  // child.stderr.on("data", (data) => {
+  //   info(`[anvil-zksync stderr]: ${data.toString()}`);
+  // });
 
   child.on("error", (error) => {
     console.error(`Failed to start child process with command: ${toolPath}/anvil-zksync ${args.join(" ")}`);
