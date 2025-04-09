@@ -670,6 +670,8 @@ Sets the logging verbosity level for console output. This controls how much deta
 **Description:**  
 Overrides the default location of the compiled system contracts. This option is only used when the `devSystemContracts` input is set to `local`. If not provided, the system will either use the default contracts folder or fall back to the `ZKSYNC_HOME` environment variable.
 
+**Note:** Important to have these contracts compiled.
+
 - **Required:** No  
 - **Default:** Not set  
 - **Example:** `./system-contracts`
