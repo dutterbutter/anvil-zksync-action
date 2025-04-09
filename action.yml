@@ -139,7 +139,7 @@ inputs:
     description: "Protocol to use (e.g. 27)"
     required: false
   verbosity:
-    description: "Enable verbose logs (e.g. -vv)"
+    description: "Enable verbose logs (e.g. vv)"
     required: false
   systemContractsPath:
     description: "Path to the system contracts"

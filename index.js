@@ -55,8 +55,9 @@ function getInputs() {
     showVmDetails: getInput("showVmDetails"),
     showGasDetails: getInput("showGasDetails"),
     resolveHashes: getInput("resolveHashes") === "true",
+    verbosity: getInput("verbosity"),
     log: getInput("log") || "info",
-    logFilePath: getInput("logFilePath") || "era_test_node.log",
+    logFilePath: getInput("logFilePath") || "anvil_zksync.log",
     offline: getInput("offline") === "true",
     healthCheckEndpoint: getInput("healthCheckEndpoint") === "true",
     configOut: getInput("configOut"),
@@ -201,6 +202,9 @@ function constructArgs(inputs) {
   if (inputs.showGasDetails)
     args.push("--show-gas-details", inputs.showGasDetails);
   if (inputs.resolveHashes) args.push("--resolve-hashes");
+  if (inputs.verbosity) {
+    args.push(`-${inputs.verbosity}`);
+  }
 
   // Gas Configuration
   if (inputs.l1GasPrice) args.push("--l1-gas-price", inputs.l1GasPrice);
