@@ -382,7 +382,7 @@ async function getDownloadUrl(releaseTag: string, arch: string): Promise<string>
   const apiUrl =
     releaseTag === "latest"
       ? "https://api.github.com/repos/matter-labs/anvil-zksync/releases/latest"
-      : `https://api.github.com/repos/matter-labs/anvil-zksync/releases/tag/${releaseTag}`;
+      : `https://api.github.com/repos/matter-labs/anvil-zksync/releases/tags/${releaseTag}`;
   core.info(`Fetching release information from ${apiUrl}`);
   const response = await fetch(apiUrl);
   if (!response.ok) {
