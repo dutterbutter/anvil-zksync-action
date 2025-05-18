@@ -199,16 +199,6 @@ async function setupTool(releaseTag: string, target: string): Promise<string> {
 function constructArgs(inputs: Inputs): string[] {
   const args: string[] = [];
 
-  // Top-level mode and subcommands
-  if (inputs.mode === "fork") {
-    args.push("fork");
-    if (inputs.forkUrl) args.push("--fork-url", inputs.forkUrl);
-    if (inputs.forkBlockNumber) args.push("--fork-block-number", inputs.forkBlockNumber);
-    if (inputs.forkTransactionHash) args.push("--fork-transaction-hash", inputs.forkTransactionHash);
-  } else {
-    args.push("run");
-  }
-
   // All mapped CLI options
   if (inputs.offline) args.push("--offline");
   if (inputs.healthCheckEndpoint) args.push("--health-check-endpoint");
@@ -285,6 +275,15 @@ function constructArgs(inputs: Inputs): string[] {
   // Pass any extra raw args (advanced users)
   if (inputs.extraArgs && inputs.extraArgs.trim().length > 0) {
     args.push(...inputs.extraArgs.trim().split(/\s+/));
+  }
+
+  if (inputs.mode === "fork") {
+    args.push("fork");
+    if (inputs.forkUrl) args.push("--fork-url", inputs.forkUrl);
+    if (inputs.forkBlockNumber) args.push("--fork-block-number", inputs.forkBlockNumber);
+    if (inputs.forkTransactionHash) args.push("--fork-transaction-hash", inputs.forkTransactionHash);
+  } else {
+    args.push("run");
   }
 
   core.debug(`Constructed command-line arguments: ${args.join(" ")}`);
