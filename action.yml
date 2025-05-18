@@ -29,24 +29,11 @@ inputs:
   port:
     description: "Port to listen on (default: 8011)"
     required: false
-    default: "8011"
   host:
     description: "The host IP address to listen on (default: 127.0.0.1)"
     required: false
-    default: "127.0.0.1"
   chainId:
     description: "Specify chain ID (default: 260)"
-    required: false
-    default: "260"
-  debugMode:
-    description: "Enable debug mode"
-    required: false
-    default: "false"
-  showCalls:
-    description: "Show call debug information (none, user, system, all)"
-    required: false
-  showOutputs:
-    description: "Show call output information (true, false)"
     required: false
   showStorageLogs:
     description: "Show storage log information (none, read, write, paid, all)"
@@ -57,26 +44,18 @@ inputs:
   showGasDetails:
     description: "Show gas details information (none, all)"
     required: false
-  resolveHashes:
-    description: "Resolve ABI and topic names for better readability (true, false)"
-    required: false
-    default: "false"
   log:
     description: "Log level (trace, debug, info, warn, error)"
     required: false
-    default: "info"
   logFilePath:
     description: "Log file path (default: anvil_zksync.log)"
     required: false
-    default: "anvil_zksync.log"
   offline:
     description: "Run in offline mode (true, false)"
     required: false
-    default: "false"
   healthCheckEndpoint:
     description: "Enable health check endpoint (true, false)"
     required: false
-    default: "false"
   configOut:
     description: "Output config file path"
     required: false
@@ -101,30 +80,24 @@ inputs:
   devSystemContracts:
     description: "Option for system contracts (built-in, local, built-in-without-security)"
     required: false
-  emulateEvm:
-    description: "Enable EVM emulation (true, false)"
+  evmInterpreter:
+    description: "Enable EVM interpretation (true, false)"
     required: false
-    default: "false"
   cache:
     description: "Cache type (none, memory, disk)"
     required: false
-    default: "disk"
   resetCache:
     description: "Reset the local disk cache (true, false)"
     required: false
-    default: "false"
   cacheDir:
     description: "Cache directory location for disk cache (default: .cache)"
     required: false
-    default: ".cache"
   accounts:
     description: "Number of dev accounts to generate and configure (default: 10)"
     required: false
-    default: "10"
   balance:
     description: "The balance of every dev account in Ether (default: 10000)"
     required: false
-    default: "10000"
   mnemonic:
     description: "BIP39 mnemonic phrase for generating accounts"
     required: false
@@ -137,16 +110,77 @@ inputs:
   derivationPath:
     description: "Derivation path of the child key to be derived (default: m/44'/60'/0'/0/)"
     required: false
-    default: "m/44'/60'/0'/0/"
   autoImpersonate:
     description: "Enable automatic impersonation on startup (true, false)"
     required: false
-    default: "false"
   blockTime:
     description: "Block time in seconds for interval sealing"
     required: false
   protocolVersion:
     description: "Protocol to use (e.g. 27)"
+    required: false
+  enforceBytecodeCompression:
+    description: "Enforce bytecode compression on system contracts"
+    required: false
+  systemContractsPath:
+    description: "Override path to compiled system contracts"
+    required: false
+  showNodeConfig:
+    description: "Print node config at startup"
+    required: false
+  verbosity:
+    description: "Verbosity level (-v, -vv, …)"
+    required: false
+  timestamp:
+    description: "Genesis block timestamp"
+    required: false
+  init:
+    description: "Path to genesis.json"
+    required: false
+  state:
+    description: "Path for combined load/dump state file"
+    required: false
+  stateInterval:
+    description: "Interval (sec) to dump state"
+    required: false
+  dumpState:
+    description: "Path to dump chain state on exit"
+    required: false
+  preserveHistoricalStates:
+    description: "Keep historical snapshots when dumping state"
+    required: false
+  loadState:
+    description: "Path to load saved state snapshot"
+    required: false
+  noMining:
+    description: "Disable auto-mining (mine on demand)"
+    required: false
+  allowOrigin:
+    description: "CORS allow-origin header"
+    required: false
+  noCors:
+    description: "Disable CORS entirely"
+    required: false
+  order:
+    description: "Transaction ordering (fifo, …)"
+    required: false
+  spawnL1:
+    description: "Port to spawn L1 anvil if enabling L1"
+    required: false
+  externalL1:
+    description: "External L1 JSON-RPC endpoint"
+    required: false
+  autoExecuteL1:
+    description: "Auto execute L1 batches (requires L1 enabled)"
+    required: false
+  baseTokenSymbol:
+    description: "Base token symbol (defaults to ETH)"
+    required: false
+  baseTokenRatio:
+    description: "Base token conversion ratio"
+    required: false
+  extra-args:
+    description: "Raw extra args for advanced use"
     required: false
 runs:
   using: 'node20'
