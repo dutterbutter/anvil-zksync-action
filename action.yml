@@ -38,16 +38,6 @@ inputs:
     description: "Specify chain ID (default: 260)"
     required: false
     default: "260"
-  debugMode:
-    description: "Enable debug mode"
-    required: false
-    default: "false"
-  showCalls:
-    description: "Show call debug information (none, user, system, all)"
-    required: false
-  showOutputs:
-    description: "Show call output information (true, false)"
-    required: false
   showStorageLogs:
     description: "Show storage log information (none, read, write, paid, all)"
     required: false
@@ -57,10 +47,6 @@ inputs:
   showGasDetails:
     description: "Show gas details information (none, all)"
     required: false
-  resolveHashes:
-    description: "Resolve ABI and topic names for better readability (true, false)"
-    required: false
-    default: "false"
   log:
     description: "Log level (trace, debug, info, warn, error)"
     required: false
@@ -147,6 +133,78 @@ inputs:
     required: false
   protocolVersion:
     description: "Protocol to use (e.g. 27)"
+    required: false
+  enforceBytecodeCompression:
+    description: "Enforce bytecode compression on system contracts"
+    required: false
+    default: "false"
+  systemContractsPath:
+    description: "Override path to compiled system contracts"
+    required: false
+  showNodeConfig:
+    description: "Print node config at startup"
+    required: false
+    default: "false"
+  verbosity:
+    description: "Verbosity level (-v, -vv, …)"
+    required: false
+    default: "0"
+  timestamp:
+    description: "Genesis block timestamp"
+    required: false
+  init:
+    description: "Path to genesis.json"
+    required: false
+  state:
+    description: "Path for combined load/dump state file"
+    required: false
+  stateInterval:
+    description: "Interval (sec) to dump state"
+    required: false
+  dumpState:
+    description: "Path to dump chain state on exit"
+    required: false
+  preserveHistoricalStates:
+    description: "Keep historical snapshots when dumping state"
+    required: false
+    default: "false"
+  loadState:
+    description: "Path to load saved state snapshot"
+    required: false
+  noMining:
+    description: "Disable auto-mining (mine on demand)"
+    required: false
+    default: "false"
+  allowOrigin:
+    description: "CORS allow-origin header"
+    required: false
+    default: "*"
+  noCors:
+    description: "Disable CORS entirely"
+    required: false
+    default: "false"
+  order:
+    description: "Transaction ordering (fifo, …)"
+    required: false
+    default: "fifo"
+  spawnL1:
+    description: "Port to spawn L1 anvil if enabling L1"
+    required: false
+  externalL1:
+    description: "External L1 JSON-RPC endpoint"
+    required: false
+  autoExecuteL1:
+    description: "Auto execute L1 batches (requires L1 enabled)"
+    required: false
+    default: "false"
+  baseTokenSymbol:
+    description: "Base token symbol (defaults to ETH)"
+    required: false
+  baseTokenRatio:
+    description: "Base token conversion ratio"
+    required: false
+  extra-args:
+    description: "Raw extra args for advanced use"
     required: false
 runs:
   using: 'node20'

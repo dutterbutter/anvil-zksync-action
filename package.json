@@ -1,13 +1,13 @@
 {
   "name": "anvil-zksync-action",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "GitHub Action to run anvil-zksync with various configurations.",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "bun build index.js --outdir dist --minify --target node",
-    "lint": "bunx eslint . ./index.js"
+    "build": "bun build src/index.ts --outdir dist --minify --target node",
+    "lint": "bunx eslint 'src/**/*.ts'"
   },
   "keywords": [
     "github",
