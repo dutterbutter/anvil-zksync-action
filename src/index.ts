@@ -295,7 +295,7 @@ function spawnProcess(toolPath: string, args: string[]): void {
 
   const child = spawn(`${toolPath}/anvil-zksync`, args, {
     detached: true,
-    stdio: ["ignore", "pipe", "pipe"],
+    stdio: ["ignore"],
   });
 
   child.stdout?.on("data", (chunk) => core.info(chunk.toString()));
