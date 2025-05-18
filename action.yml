@@ -80,8 +80,8 @@ inputs:
   devSystemContracts:
     description: "Option for system contracts (built-in, local, built-in-without-security)"
     required: false
-  emulateEvm:
-    description: "Enable EVM emulation (true, false)"
+  evmInterpreter:
+    description: "Enable EVM interpretation (true, false)"
     required: false
   cache:
     description: "Cache type (none, memory, disk)"

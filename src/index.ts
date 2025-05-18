@@ -29,7 +29,7 @@ type Inputs = {
   limitScaleFactor?: string;
   overrideBytecodesDir?: string;
   devSystemContracts?: string;
-  emulateEvm: boolean;
+  evmInterpreter: boolean;
   cache?: string;
   resetCache: boolean;
   cacheDir?: string;
@@ -71,21 +71,6 @@ const DEFAULTS = {
   mode: "run",
   port: "8011",
   host: "127.0.0.1",
-  chainId: "260",
-  debugMode: false,
-  resolveHashes: false,
-  offline: false,
-  healthCheckEndpoint: false,
-  emulateEvm: false,
-  resetCache: false,
-  autoImpersonate: false,
-  log: "info",
-  logFilePath: "anvil_zksync.log",
-  cache: "disk",
-  cacheDir: ".cache",
-  accounts: "10",
-  balance: "10000",
-  derivationPath: "m/44'/60'/0'/0/",
 };
 
 async function run() {
@@ -96,7 +81,7 @@ async function run() {
     const toolPath = await setupTool(inputs.releaseTag, inputs.target);
 
     const args = constructArgs(inputs);
-    await spawnProcess(toolPath, args);
+    spawnProcess(toolPath, args);
 
     await performHealthCheck(inputs.host, inputs.port);
 
@@ -122,14 +107,14 @@ function getInputs(): Inputs {
     forkTransactionHash: core.getInput("forkTransactionHash") || undefined,
     port: core.getInput("port") || DEFAULTS.port,
     host: core.getInput("host") || DEFAULTS.host,
-    chainId: core.getInput("chainId") || DEFAULTS.chainId,
+    chainId: core.getInput("chainId") || undefined,
     showStorageLogs: core.getInput("showStorageLogs") || undefined,
     showVmDetails: core.getInput("showVmDetails") || undefined,
     showGasDetails: core.getInput("showGasDetails") || undefined,
-    log: core.getInput("log") || DEFAULTS.log,
-    logFilePath: core.getInput("logFilePath") || DEFAULTS.logFilePath,
-    offline: getBool("offline", DEFAULTS.offline),
-    healthCheckEndpoint: getBool("healthCheckEndpoint", DEFAULTS.healthCheckEndpoint),
+    log: core.getInput("log") || undefined,
+    logFilePath: core.getInput("logFilePath") || undefined,
+    offline: getBool("offline", false),
+    healthCheckEndpoint: getBool("healthCheckEndpoint", false),
     configOut: core.getInput("configOut") || undefined,
     l1GasPrice: core.getInput("l1GasPrice") || undefined,
     l2GasPrice: core.getInput("l2GasPrice") || undefined,
@@ -138,17 +123,17 @@ function getInputs(): Inputs {
     limitScaleFactor: core.getInput("limitScaleFactor") || undefined,
     overrideBytecodesDir: core.getInput("overrideBytecodesDir") || undefined,
     devSystemContracts: core.getInput("devSystemContracts") || undefined,
-    emulateEvm: getBool("emulateEvm", DEFAULTS.emulateEvm),
-    cache: core.getInput("cache") || DEFAULTS.cache,
-    resetCache: getBool("resetCache", DEFAULTS.resetCache),
-    cacheDir: core.getInput("cacheDir") || DEFAULTS.cacheDir,
-    accounts: core.getInput("accounts") || DEFAULTS.accounts,
-    balance: core.getInput("balance") || DEFAULTS.balance,
+    evmInterpreter: getBool("evmInterpreter", false),
+    cache: core.getInput("cache") || undefined,
+    resetCache: getBool("resetCache", false),
+    cacheDir: core.getInput("cacheDir") || undefined,
+    accounts: core.getInput("accounts") || undefined,
+    balance: core.getInput("balance") || undefined,
     mnemonic: core.getInput("mnemonic") || undefined,
     mnemonicRandom: core.getInput("mnemonicRandom") || undefined,
     mnemonicSeedUnsafe: core.getInput("mnemonicSeedUnsafe") || undefined,
-    derivationPath: core.getInput("derivationPath") || DEFAULTS.derivationPath,
-    autoImpersonate: getBool("autoImpersonate", DEFAULTS.autoImpersonate),
+    derivationPath: core.getInput("derivationPath") || undefined,
+    autoImpersonate: getBool("autoImpersonate", false),
     blockTime: core.getInput("blockTime") || undefined,
     protocolVersion: core.getInput("protocolVersion") || undefined,
     enforceBytecodeCompression: core.getInput("enforceBytecodeCompression") === "true",
@@ -248,7 +233,7 @@ function constructArgs(inputs: Inputs): string[] {
 
   if (inputs.overrideBytecodesDir) args.push("--override-bytecodes-dir", inputs.overrideBytecodesDir);
   if (inputs.devSystemContracts) args.push("--dev-system-contracts", inputs.devSystemContracts);
-  if (inputs.emulateEvm) args.push("--emulate-evm");
+  if (inputs.evmInterpreter) args.push("--evm-interpreter");
 
   if (inputs.log) args.push("--log", inputs.log);
   if (inputs.logFilePath) args.push("--log-file-path", inputs.logFilePath);
@@ -306,29 +291,19 @@ function constructArgs(inputs: Inputs): string[] {
   return args;
 }
 
-async function spawnProcess(toolPath: string, args: string[]): Promise<void> {
+function spawnProcess(toolPath: string, args: string[]): void {
   core.info(`Starting anvil-zksync with args: ${args.join(" ")}`);
 
-  return new Promise((resolve, reject) => {
-    const child = spawn(`${toolPath}/anvil-zksync`, args, {
-      detached: true,
-      stdio: "ignore",
-    });
-
-    child.on("error", (error) => {
-      core.setFailed(`Failed to start anvil-zksync: ${error}`);
-      reject(error);
-    });
-
-    child.on("exit", (code, signal) => {
-      if (code) core.info(`Child process exited with code ${code}`);
-      else if (signal) core.info(`Child process killed with signal ${signal}`);
-      else core.info("Child process exited");
-      resolve();
-    });
-
-    child.unref();
+  const child = spawn(`${toolPath}/anvil-zksync`, args, {
+    detached: true,
+    stdio: ["ignore", "pipe", "pipe"],
   });
+
+  child.stdout?.on("data", (chunk) => core.info(chunk.toString()));
+  child.stderr?.on("data", (chunk) => core.error(chunk.toString()));
+
+  // run in background
+  child.unref();
 }
 
 async function performHealthCheck(host: string, port: string): Promise<void> {
