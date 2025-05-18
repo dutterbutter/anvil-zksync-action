@@ -92,7 +92,6 @@ async function run() {
 }
 
 function getInputs(): Inputs {
-  // Use the @actions/core getInput utility
   const getBool = (name: string, fallback: boolean) => {
     const v = core.getInput(name);
     return v === "" ? fallback : v === "true";
@@ -240,37 +239,37 @@ function constructArgs(inputs: Inputs): string[] {
   if (inputs.derivationPath) args.push("--derivation-path", inputs.derivationPath);
   if (inputs.autoImpersonate) args.push("--auto-impersonate");
 
-    // System & bytecode
-    if (inputs.enforceBytecodeCompression)   args.push("--enforce-bytecode-compression");
-    if (inputs.systemContractsPath)          args.push("--system-contracts-path", inputs.systemContractsPath);
-  
-    // Debugging & verbosity
-    if (inputs.showNodeConfig)               args.push("--show-node-config");
-    if (inputs.verbosity > 0)                args.push("-".repeat(inputs.verbosity + 1)); // e.g. -vvv
-  
-    // State / snapshot
-    if (inputs.timestamp)                    args.push("--timestamp", inputs.timestamp);
-    if (inputs.initFile)                     args.push("--init", inputs.initFile);
-    if (inputs.state)                        args.push("--state", inputs.state);
-    if (inputs.stateInterval)                args.push("--state-interval", inputs.stateInterval);
-    if (inputs.dumpState)                    args.push("--dump-state", inputs.dumpState);
-    if (inputs.preserveHistoricalStates)     args.push("--preserve-historical-states");
-    if (inputs.loadState)                    args.push("--load-state", inputs.loadState);
-  
-    // Mining / server
-    if (inputs.noMining)                     args.push("--no-mining");
-    if (inputs.allowOrigin)                  args.push("--allow-origin", inputs.allowOrigin);
-    if (inputs.noCors)                       args.push("--no-cors");
-    if (inputs.order)                        args.push("--order", inputs.order);
-  
-    // L1 support
-    if (inputs.spawnL1)                      args.push("--spawn-l1", inputs.spawnL1);
-    if (inputs.externalL1)                   args.push("--external-l1", inputs.externalL1);
-    if (inputs.autoExecuteL1)                args.push("--auto-execute-l1");
-  
-    // Custom base token
-    if (inputs.baseTokenSymbol)              args.push("--base-token-symbol", inputs.baseTokenSymbol);
-    if (inputs.baseTokenRatio)               args.push("--base-token-ratio", inputs.baseTokenRatio);
+  // System & bytecode
+  if (inputs.enforceBytecodeCompression)   args.push("--enforce-bytecode-compression");
+  if (inputs.systemContractsPath)          args.push("--system-contracts-path", inputs.systemContractsPath);
+
+  // Debugging & verbosity
+  if (inputs.showNodeConfig)               args.push("--show-node-config");
+  if (inputs.verbosity > 0)                args.push("-".repeat(inputs.verbosity + 1)); // e.g. -vvv
+
+  // State / snapshot
+  if (inputs.timestamp)                    args.push("--timestamp", inputs.timestamp);
+  if (inputs.initFile)                     args.push("--init", inputs.initFile);
+  if (inputs.state)                        args.push("--state", inputs.state);
+  if (inputs.stateInterval)                args.push("--state-interval", inputs.stateInterval);
+  if (inputs.dumpState)                    args.push("--dump-state", inputs.dumpState);
+  if (inputs.preserveHistoricalStates)     args.push("--preserve-historical-states");
+  if (inputs.loadState)                    args.push("--load-state", inputs.loadState);
+
+  // Mining / server
+  if (inputs.noMining)                     args.push("--no-mining");
+  if (inputs.allowOrigin)                  args.push("--allow-origin", inputs.allowOrigin);
+  if (inputs.noCors)                       args.push("--no-cors");
+  if (inputs.order)                        args.push("--order", inputs.order);
+
+  // L1 support
+  if (inputs.spawnL1)                      args.push("--spawn-l1", inputs.spawnL1);
+  if (inputs.externalL1)                   args.push("--external-l1", inputs.externalL1);
+  if (inputs.autoExecuteL1)                args.push("--auto-execute-l1");
+
+  // Custom base token
+  if (inputs.baseTokenSymbol)              args.push("--base-token-symbol", inputs.baseTokenSymbol);
+  if (inputs.baseTokenRatio)               args.push("--base-token-ratio", inputs.baseTokenRatio);
 
   // Pass any extra raw args (advanced users)
   if (inputs.extraArgs && inputs.extraArgs.trim().length > 0) {
