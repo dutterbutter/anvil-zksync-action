@@ -29,15 +29,12 @@ inputs:
   port:
     description: "Port to listen on (default: 8011)"
     required: false
-    default: "8011"
   host:
     description: "The host IP address to listen on (default: 127.0.0.1)"
     required: false
-    default: "127.0.0.1"
   chainId:
     description: "Specify chain ID (default: 260)"
     required: false
-    default: "260"
   showStorageLogs:
     description: "Show storage log information (none, read, write, paid, all)"
     required: false
@@ -50,19 +47,15 @@ inputs:
   log:
     description: "Log level (trace, debug, info, warn, error)"
     required: false
-    default: "info"
   logFilePath:
     description: "Log file path (default: anvil_zksync.log)"
     required: false
-    default: "anvil_zksync.log"
   offline:
     description: "Run in offline mode (true, false)"
     required: false
-    default: "false"
   healthCheckEndpoint:
     description: "Enable health check endpoint (true, false)"
     required: false
-    default: "false"
   configOut:
     description: "Output config file path"
     required: false
@@ -90,27 +83,21 @@ inputs:
   emulateEvm:
     description: "Enable EVM emulation (true, false)"
     required: false
-    default: "false"
   cache:
     description: "Cache type (none, memory, disk)"
     required: false
-    default: "disk"
   resetCache:
     description: "Reset the local disk cache (true, false)"
     required: false
-    default: "false"
   cacheDir:
     description: "Cache directory location for disk cache (default: .cache)"
     required: false
-    default: ".cache"
   accounts:
     description: "Number of dev accounts to generate and configure (default: 10)"
     required: false
-    default: "10"
   balance:
     description: "The balance of every dev account in Ether (default: 10000)"
     required: false
-    default: "10000"
   mnemonic:
     description: "BIP39 mnemonic phrase for generating accounts"
     required: false
@@ -123,11 +110,9 @@ inputs:
   derivationPath:
     description: "Derivation path of the child key to be derived (default: m/44'/60'/0'/0/)"
     required: false
-    default: "m/44'/60'/0'/0/"
   autoImpersonate:
     description: "Enable automatic impersonation on startup (true, false)"
     required: false
-    default: "false"
   blockTime:
     description: "Block time in seconds for interval sealing"
     required: false
@@ -137,18 +122,15 @@ inputs:
   enforceBytecodeCompression:
     description: "Enforce bytecode compression on system contracts"
     required: false
-    default: "false"
   systemContractsPath:
     description: "Override path to compiled system contracts"
     required: false
   showNodeConfig:
     description: "Print node config at startup"
     required: false
-    default: "false"
   verbosity:
     description: "Verbosity level (-v, -vv, …)"
     required: false
-    default: "0"
   timestamp:
     description: "Genesis block timestamp"
     required: false
@@ -167,26 +149,21 @@ inputs:
   preserveHistoricalStates:
     description: "Keep historical snapshots when dumping state"
     required: false
-    default: "false"
   loadState:
     description: "Path to load saved state snapshot"
     required: false
   noMining:
     description: "Disable auto-mining (mine on demand)"
     required: false
-    default: "false"
   allowOrigin:
     description: "CORS allow-origin header"
     required: false
-    default: "*"
   noCors:
     description: "Disable CORS entirely"
     required: false
-    default: "false"
   order:
     description: "Transaction ordering (fifo, …)"
     required: false
-    default: "fifo"
   spawnL1:
     description: "Port to spawn L1 anvil if enabling L1"
     required: false
@@ -196,7 +173,6 @@ inputs:
   autoExecuteL1:
     description: "Auto execute L1 batches (requires L1 enabled)"
     required: false
-    default: "false"
   baseTokenSymbol:
     description: "Base token symbol (defaults to ETH)"
     required: false

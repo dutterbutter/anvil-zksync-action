@@ -406,5 +406,4 @@ async function getDownloadUrl(releaseTag: string, arch: string): Promise<string>
   return assetInfo.browser_download_url;
 }
 
-// Entry point
 run();
