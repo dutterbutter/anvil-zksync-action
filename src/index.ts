@@ -86,6 +86,7 @@ async function run() {
     await performHealthCheck(inputs.host, inputs.port);
 
     core.info(`anvil-zksync started successfully on ${inputs.host}:${inputs.port}`);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     core.setFailed(error.message || String(error));
   }
@@ -345,6 +346,7 @@ async function isNodeRunning(host: string, port: string): Promise<boolean> {
       { timeout: 3000 }
     );
     return response.data && response.data.result !== undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     core.debug(`Health check failed for ${host}:${port} - ${error.message}`);
     return false;
@@ -367,6 +369,7 @@ async function getDownloadUrl(releaseTag: string, arch: string): Promise<string>
   if (!releaseInfo || !releaseInfo.assets || !releaseInfo.assets.length) {
     throw new Error(`No release assets found for tag ${releaseTag}.`);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const assetInfo = releaseInfo.assets.find((asset: any) =>
     asset.name.includes(arch)
   );
